@@ -1,0 +1,233 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="buscaminas.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../OneDrive/Escritorio/curso html/ProyectoWeb/css/all.css">
+    <title>Buscaminas</title>
+
+
+    <script>
+        let porcentaje = 10;
+        let minas = [];
+        let lado = 5;
+        let finJuego = false;
+        let defaultValue = {
+            esMina: false,
+            alrededor: 0,
+            button: Object,
+        };
+        let minaIcon = "<i class=\"fa fa-bomb\" aria-hidden=\"true\"></i>";
+        let flagIcon = "<i class=\"fa fa-flag\" aria-hidden=\"true\"></i>";
+
+        function makeArray(w, z, val) {
+            var arr = [];
+            for (let i = 0; i < w; i++) {
+                arr[i] = [];
+                for (let j = 0; j < z; j++) {
+                    // FOOCKING DEEPCLONING!
+                    arr[i][j] = JSON.parse(JSON.stringify(val));
+                }
+            }
+            return arr;
+        }
+        function hayMina(x, y) {
+            // mal! usando globales dentro de una funcion que es llamada por otra funcion
+            // deberia pasarse por parametro
+            /*
+                debido a que no puedo acceder a un array undefined, tengo que comprobar
+                primero que el sub array exista, si existe luego verificar que este contenga
+                el valor, y luego de ambos, verificar, ya sabiendo que es un objeto si tiene
+                una mina
+            */
+            if (minas[x] == undefined) return 0;
+            if (minas[x][y] == undefined) return 0;
+            if (minas[x][y].esMina) return 1;
+            return 0; // no es mina por descarte
+        }
+        function llenarDeMinas(x, y, lado) {
+            // INEFICIENTE, DOS PASADAS, DEBERIAN SER SOLO UNA
+            // lleno de minas, exceptuando la coordenada que me envian, completandolo
+            // con el porcentaje que debo tener
+            let minasCount = Math.round(((lado * lado) / 100) * porcentaje);
+            // minas no sea cero, prosigo llenando de minas
+            while (minasCount) {
+                // obtengo coordenadas aleatoreas
+                rx = Math.round(Math.random() * (lado - 1));
+                ry = Math.round(Math.random() * (lado - 1));
+                // si es la que me pasaron o hay una mina, intento nuevamente
+                if ((rx == x && ry == y) || minas[rx][ry].esMina) continue;
+                // si no pongo una mina
+                minas[rx][ry].esMina = true;
+                // resto uno al contador de minas
+                --minasCount;
+            }
+            // termine de llenar de minas, ahora hago el conteo al rededor de cada
+            // posicion, y le asigno un valor
+            for (rx = 0; rx < lado; ++rx) {
+                for (ry = 0; ry < lado; ++ry) {
+                    // se puede automatizar de seguro, PENSARLO DESPUES
+                    minas[rx][ry].alrededor =
+                        hayMina(rx - 1, ry - 1) +
+                        hayMina(rx - 1, ry) +
+                        hayMina(rx, ry - 1) +
+                        hayMina(rx + 1, ry + 1) +
+                        hayMina(rx, ry + 1) +
+                        hayMina(rx + 1, ry) +
+                        hayMina(rx - 1, ry + 1) +
+                        hayMina(rx + 1, ry - 1);
+                }
+            }
+        }
+        function descubrirYPropagar(x, y) {
+            //  si toco un cero, debo propagar el click a todos los
+            //  ceros del area circundante y NO minas
+            // muestro el valor propio (tratar de mover el del click hacia aca
+            // asi no se repite codigo)
+            console.log("propagar ceros entro");
+            if (minas[x] == undefined) return;
+            if (minas[x][y] == undefined) return;
+            /*  RE NEGRO, pero lo uso como marcador para ver si ya fue visitado
+                y evitar que caiga en recursion infinita
+            */
+            if (minas[x][y].button.textContent != "?") return;
+            showButton(x, y);
+            if (minas[x][y].alrededor == 0) {
+                descubrirYPropagar(x - 1, y - 1);
+                descubrirYPropagar(x - 1, y);
+                descubrirYPropagar(x, y - 1);
+                descubrirYPropagar(x + 1, y + 1);
+                descubrirYPropagar(x, y + 1);
+                descubrirYPropagar(x + 1, y);
+                descubrirYPropagar(x - 1, y + 1);
+                descubrirYPropagar(x + 1, y - 1);
+            }
+        }
+        function showButton(x, y) {
+            cell = minas[x][y];
+            cell.button.classList.toggle("Cell");
+            cell.button.textContent = cell.alrededor;
+            cell.button.setAttribute("class", "NoMina NoMina" + cell.alrededor);
+            /*  cell.button.style.background = "gray"; */
+            cell.button.disabled = true;
+        }
+        clickAction = function (valor) {
+            primerClick(valor);
+        };
+        defaultAction = function (valor) {
+            let obj = JSON.parse(valor.target.value);
+            let cell = minas[obj.x][obj.y];
+            console.log(cell);
+            // cell.button.classList.toggle("Cell");
+            if (cell.esMina) {
+                cell.button.classList.toggle("Cell");
+                cell.button.setAttribute("class", "Mina");
+                cell.button.disabled = true;
+                valor.target.innerHTML = minaIcon;
+                if (!finJuego) {
+                    finJuego = true;
+                    alert("fin del juego");
+                    showTodosCell();
+                }
+            } else {
+                descubrirYPropagar(obj.x, obj.y);
+            }
+        };
+        function primerClick(valor) {
+            /*
+                por una cuestion de eficiencia, y siendo solo el primer
+                el primer click seria solo una funcion que se llama una vez
+                y luego sobreescribe el clickAction, para no perder siempre
+                tiempo de ejecucion en preguntar si es el primer click
+            */
+            let obj = JSON.parse(valor.target.value);
+            llenarDeMinas(obj.x, obj.y, lado);
+            clickAction = defaultAction;
+            clickAction(valor);
+        }
+        // devuelve la tabla ya con botones pero no con las minas
+        function crearGrilla(ancho, alto) {
+            var grilla = document.createElement("div");
+            for (let y = 0; y < alto; ++y) {
+                var row = document.createElement("div");
+                row.setAttribute("class", "Row");
+                for (let x = 0; x < ancho; ++x) {
+                    // creamos la celda
+                    var cell = document.createElement("div");
+                    cell.setAttribute("class", "Cell");
+                    // creamos el boton
+                    var btn = document.createElement("button");
+                    // le asignamos un texto al boton
+                    btn.textContent = "?";
+                    // le asignamos un VALOR a este boton (que será el que se pasara, la coordenada)
+                    btn.setAttribute(
+                        "value",
+                        JSON.stringify({ x: x, y: y })
+                    );
+                    // definimos que hace al hacerle click al boton
+                    btn.onclick = (value) => {
+                        clickAction(value);
+                    };
+                    minas[x][y].button = btn;
+                    cell.appendChild(btn);
+                    row.appendChild(cell);
+                }
+                grilla.appendChild(row);
+            }
+            return grilla;
+        }
+        function showTodosCell() {
+            document.querySelectorAll("button").forEach((e) => {
+                e.click();
+            });
+        }
+        function crearBuscaminasUsuario(valor) {
+            lado = Number(valor);
+            finJuego = false;
+            clickAction = function (valor) {
+                primerClick(valor);
+            };
+            minas = makeArray(lado, lado, defaultValue);
+            var contenedor = document.getElementById("container");
+            contenedor.innerHTML = "";
+            contenedor.appendChild(crearGrilla(lado, lado));
+        }
+        window.addEventListener("load", () => {
+            // console.log("buscaminas inicializado");
+            // var contenedor = document.getElementById("container");
+            // contenedor.appendChild(crearGrilla(5, 5));
+        });
+    </script>
+</head>
+
+<body>
+    <div class="menu">
+        <div class="primerFila">
+            <div class="elije-dificultad">Elije una dificultad:</div>
+            <div class="niveles">
+                <select name="dificultad" id="dificultad" onclick="javascript:crearBuscaminasUsuario(value);">
+                    <option value="5">Facil (5x5)</option>
+                    <option value="10">Medio (10x10)</option>
+                    <option value="15">Dificil (15x15)</option>
+                </select>
+            </div>
+        </div>
+        <div class="barra"> 
+            <div class="cantidadMinas">00</div>
+            <div class="emoji"><i class="fa fa-smile" aria-hidden="true"></i></div>
+            <div class="timer">00.00</div>
+        </div>
+        <div class="segundaFila">
+            
+            <div id="container"></div>
+            <br>
+        </div>
+        <a href="#" class="me-rindo" onclick="javascript:showTodosCell();">Me Rindo</a>
+    </div>
+
+</body>
+
+</html>

@@ -1,201 +1,201 @@
-   body {
-       text-align: center;
-       padding: auto;
-   }
+body {
+    text-align: center;
+    padding: auto;
+}
 
-   .menu {
-       background: rgb(211, 196, 196);
-       border: 1px solid #333;
-       margin: auto;
-       padding: 10px;
-       border-radius: 5px;
-       font-family: 'Amaranth', sans-serif;
-       width: 80%;
-       text-align: center;
-       display: block;
-   }
-
-   .primerFila {
+.menu {
+    background: rgb(211, 196, 196);
+    border: 1px solid #333;
+    margin: auto;
     padding: 10px;
-    display: flex;
-    justify-content: space-around;
-      
+    border-radius: 5px;
+    font-family: 'Amaranth', sans-serif;
+    width: 80%;
+    text-align: center;
+    display: block;
+}
 
-   }
-
-   .segundaFila {
-    padding: 10px;
-    display: flex;
-    justify-content: space-around;
-      
-
-   }
-
-   .Cell {
-       display: table-cell;
-       border-width: thin;
-       min-width: 5px;
-       min-height: 5px;
-       width: fit-content;
-   }
-
-   .elije-dificultad {
-       background: rgb(177, 174, 174);
-       display: flex;
-       padding: 10px;
-       color: black;
-       border-radius: 3px;
-       margin-bottom: 5px;
-       border: 1px black solid;
-    
-
-
-
-
-   }
-
-   .niveles {
-       background: rgb(177, 174, 174);
-       display: flex;
-       color: black;
-       border-radius: 3px;
-       margin-bottom: 5px;
-       border: 1px black solid;
-       padding: 10px;
-       
-
-
-
-   }
-
-   .me-rindo {
-       background: rgb(177, 174, 174);
-       display: flex;
-       padding: 10px;
-       color: red;
-       text-decoration: none;
-       border-radius: 5px;
-       margin-bottom: 5px;
-       border: 1px black solid;
-       width: fit-content;
-       text-align: center;
-
-
-
-
-   }
-.Mina{
-    color: black;
-    background: rgb(177, 174, 174); 
-    border:1px gray solid;  
-    font-size: 13px;
+.primerFila {
+ padding: 10px;
+ display: flex;
+ justify-content: space-around;
+   
 
 }
-   .NoMina {
-    background: rgb(177, 174, 174); 
-    border:1px gray solid;
-    font-weight: bolder;   
-    
-   }
 
-   .NoMina0 {
-    color:rgb(177, 174, 174);
-    
-   }
-
-   .NoMina1 {
-    color:blue;
-    
-   }
-  
-   .NoMina2 {
-       color: green;
-       
-   }
-
-   .NoMina3 {
-    color: red;
-    
-   }
-
-   .NoMina4 {
-    color: purple;
-    
-   }
-   .NoMina5{
-    color: maroon;
-    
-   }
-   .NoMina6{
-    color: turquoise;
-    
-   }
-   .NoMina7{
-    color: black;
+.segundaFila {
+ padding: 10px;
+ display: flex;
+ justify-content: space-around;
    
-   }
-   .NoMinA8{
-    color: gray;
-    
-   }
 
-   .Row {
-       display: table-row;
+}
 
-   }
+.Cell {
+    display: table-cell;
+    border-width: thin;
+    min-width: 5px;
+    min-height: 5px;
+    width: fit-content;
+}
 
-   button {
-       background: #cccccc;
-       border-color: #fff #c6c6c6 #c6c6c6 #fff;
-       border-width: 3px;
-       width: 30px;
-       height: 30px;
-       color: rgb(211, 206, 206);
-
-   }
-   .barra {
-    background: rgb(165, 162, 162);
-    padding: 10px;
+.elije-dificultad {
+    background: rgb(177, 174, 174);
     display: flex;
-    justify-content: space-around;
+    padding: 10px;
+    color: black;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    border: 1px black solid;
+ 
+
+
+
+
+}
+
+.niveles {
+    background: rgb(177, 174, 174);
+    display: flex;
+    color: black;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    border: 1px black solid;
+    padding: 10px;
     
-   }
-   .cantidadMinas{
+
+
+
+}
+
+.me-rindo {
+    background: rgb(177, 174, 174);
+    display: flex;
+    padding: 10px;
+    color: red;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border: 1px black solid;
+    width: fit-content;
+    text-align: center;
+
+
+
+
+}
+.Mina{
+ color: black;
+ background: rgb(177, 174, 174); 
+ border:1px gray solid;  
+ font-size: 13px;
+
+}
+.NoMina {
+ background: rgb(177, 174, 174); 
+ border:1px gray solid;
+ font-weight: bolder;   
+ 
+}
+
+.NoMina0 {
+ color:rgb(177, 174, 174);
+ 
+}
+
+.NoMina1 {
+ color:blue;
+ 
+}
+
+.NoMina2 {
+    color: green;
     
-    background: black;
-    color: rgb(150, 242, 12);
-    padding: 10px 30px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 20px;  
-   
-   }
-   .emoji{
-   
-    background: rgb(211, 196, 196);
-    padding: 10px 30px;
-    font-size: 30px;
+}
 
-   }
-   .timer{
-   
-    background: black;
-    color: rgb(150, 242, 12);
-    padding: 10px 30px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 20px;
-    
-   }
+.NoMina3 {
+ color: red;
+ 
+}
 
-   #container {
-       background: rgb(228, 228, 228);
-       color: #333;
-       border: 1px solid #333;
-       margin: auto;
-       padding: auto;
-       box-shadow: 10px 10px 10px rgb(165, 162, 162);
-       width: fit-content;
-       box-sizing: border-box;
-       font-size: 5px;
+.NoMina4 {
+ color: purple;
+ 
+}
+.NoMina5{
+ color: maroon;
+ 
+}
+.NoMina6{
+ color: turquoise;
+ 
+}
+.NoMina7{
+ color: black;
+
+}
+.NoMinA8{
+ color: gray;
+ 
+}
+
+.Row {
+    display: table-row;
+
+}
+
+button {
+    background: #cccccc;
+    border-color: #fff #c6c6c6 #c6c6c6 #fff;
+    border-width: 3px;
+    width: 30px;
+    height: 30px;
+    color: rgb(211, 206, 206);
+
+}
+.barra {
+ background: rgb(165, 162, 162);
+ padding: 10px;
+ display: flex;
+ justify-content: space-around;
+ 
+}
+.cantidadMinas{
+ 
+ background: black;
+ color: rgb(150, 242, 12);
+ padding: 10px 30px;
+ font-family: 'Press Start 2P', cursive;
+ font-size: 20px;  
+
+}
+.emoji{
+
+ background: rgb(211, 196, 196);
+ padding: 10px 30px;
+ font-size: 30px;
+
+}
+.timer{
+
+ background: black;
+ color: rgb(150, 242, 12);
+ padding: 10px 30px;
+ font-family: 'Press Start 2P', cursive;
+ font-size: 20px;
+ 
+}
+
+#container {
+    background: rgb(228, 228, 228);
+    color: #333;
+    border: 1px solid #333;
+    margin: auto;
+    padding: auto;
+    box-shadow: 10px 10px 10px rgb(165, 162, 162);
+    width: fit-content;
+    box-sizing: border-box;
+    font-size: 5px;
 
 
-   }
+}

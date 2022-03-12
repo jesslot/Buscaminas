@@ -22,7 +22,27 @@
         };
         let minaIcon = "<i class=\"fa fa-bomb\" aria-hidden=\"true\"></i>";
         let flagIcon = "<i class=\"fa fa-flag\" aria-hidden=\"true\"></i>";
+        let contadorTimerSegundos = 0;
+        let contadorTimerMinutos = 0;
+        let contadorElement = Object;
+        let interval = undefined;
 
+        function contador () {
+            contadorTimerSegundos += 0.01;
+            let segundosString = contadorTimerSegundos.toFixed(2).replace(".",":");;
+            if (contadorTimerSegundos < 10){
+                segundosString= "0" + segundosString;
+            }
+            
+            if (contadorTimerSegundos >= 60){
+                contadorTimerMinutos += 1;
+                contadorTimerSegundos = 0;
+            }
+            contadorElement.textContent= contadorTimerMinutos +":"+ segundosString;
+
+        }
+    
+        
         function makeArray(w, z, val) {
             var arr = [];
             for (let i = 0; i < w; i++) {
@@ -90,7 +110,7 @@
             console.log("propagar ceros entro");
             if (minas[x] == undefined) return;
             if (minas[x][y] == undefined) return;
-            /*  RE NEGRO, pero lo uso como marcador para ver si ya fue visitado
+            /*  lo uso como marcador para ver si ya fue visitado
                 y evitar que caiga en recursion infinita
             */
             if (minas[x][y].button.textContent != "?") return;
@@ -147,8 +167,12 @@
             llenarDeMinas(obj.x, obj.y, lado);
             clickAction = defaultAction;
             clickAction(valor);
+            contadorElement = document.getElementsByClassName("timer")[0];
+            interval = setInterval(() => {
+                contador();                
+            }, 10);
         }
-        // devuelve la tabla ya con botones pero no con las minas
+                // devuelve la tabla ya con botones pero no con las minas
         function crearGrilla(ancho, alto) {
             var grilla = document.createElement("div");
             for (let y = 0; y < alto; ++y) {
@@ -179,7 +203,15 @@
             }
             return grilla;
         }
+
+        function detenerContador () {
+            clearInterval (interval);
+            contadorTimerSegundos = 0;
+            contadorTimerMinutos = 0;
+        }
+
         function showTodosCell() {
+            detenerContador();
             document.querySelectorAll("button").forEach((e) => {
                 e.click();
             });

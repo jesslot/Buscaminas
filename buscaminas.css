@@ -73,17 +73,20 @@ body {
     display: flex;
     padding: 10px;
     color: red;
-    text-decoration: none;
     border-radius: 5px;
     margin-bottom: 5px;
     border: 1px black solid;
     width: fit-content;
     text-align: center;
-
-
-
-
 }
+    .me-rindo:hover{
+        background: white;
+        color: black;
+    }
+    .me-rindo:active{
+        background: red;
+    }
+
 .Mina{
  color: black;
  background: rgb(177, 174, 174); 
@@ -171,9 +174,11 @@ button {
 }
 .emoji{
 
- background: rgb(211, 196, 196);
- padding: 10px 30px;
- font-size: 30px;
+ padding: 10px 10px;
+ color: rgb(255, 187, 0);
+ border-color: black;
+ font-size: 40px;
+ 
 
 }
 .timer{
@@ -183,6 +188,7 @@ button {
  padding: 10px 30px;
  font-family: 'Press Start 2P', cursive;
  font-size: 20px;
+ 
  
 }
 
